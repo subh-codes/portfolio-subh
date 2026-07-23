@@ -4,6 +4,7 @@ const cursor = document.querySelector(".cursor");
 const menuToggle = document.querySelector(".menu-toggle");
 const menuPanel = document.querySelector(".menu-panel");
 const menuLinks = menuPanel.querySelectorAll("a[href^='#']");
+const progress = document.querySelector(".scroll-progress");
 
 window.addEventListener("load", () => {
   window.setTimeout(() => {
@@ -38,6 +39,19 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll(".reveal, .split-text").forEach((el) => observer.observe(el));
 
+let ticking = false;
+window.addEventListener("scroll", () => {
+  if (ticking) return;
+  ticking = true;
+  window.requestAnimationFrame(() => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = `${max > 0 ? (window.scrollY / max) * 100 : 0}%`;
+    document.querySelector(".hero__content").style.transform = `translateY(${Math.min(window.scrollY * .12, 80)}px)`;
+    document.querySelector(".hero__orbit").style.translate = `0 ${Math.min(window.scrollY * .07, 55)}px`;
+    ticking = false;
+  });
+}, { passive: true });
+
 window.addEventListener("mousemove", (event) => {
   if (!cursor) return;
   cursor.style.left = `${event.clientX}px`;
@@ -51,6 +65,18 @@ window.addEventListener("mousemove", (event) => {
 document.querySelectorAll("a, button, input, textarea").forEach((element) => {
   element.addEventListener("mouseenter", () => cursor?.classList.add("is-active"));
   element.addEventListener("mouseleave", () => cursor?.classList.remove("is-active"));
+});
+
+document.querySelectorAll(".button").forEach((button) => {
+  button.addEventListener("mousemove", (event) => {
+    const box = button.getBoundingClientRect();
+    const x = event.clientX - box.left - box.width / 2;
+    const y = event.clientY - box.top - box.height / 2;
+    button.style.transform = `translate(${x * .12}px, ${y * .18}px)`;
+  });
+  button.addEventListener("mouseleave", () => {
+    button.style.transform = "";
+  });
 });
 document.querySelectorAll(".project").forEach((project) => {
   project.addEventListener("mouseenter", () => cursor?.classList.add("is-project"));
@@ -86,7 +112,7 @@ function updateCalgaryTime() {
     minute: "2-digit",
     hour12: false
   });
-  document.querySelector("#local-time").textContent = `Calgary · ${formatter.format(new Date())} MST`;
+  document.querySelector("#local-time").textContent = `Calgary Â· ${formatter.format(new Date())} MST`;
 }
 updateCalgaryTime();
 window.setInterval(updateCalgaryTime, 60000);
