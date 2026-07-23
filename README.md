@@ -1,24 +1,20 @@
-# Subhnetar Singh Portfolio Website
+# Subhnetar Singh — Portfolio
 
-This is my personal portfolio website built using HTML, CSS, and JavaScript.
+A static, responsive portfolio built for GitHub Pages.
 
-## Features
-- Clean modern dark UI
-- Typing transition effect in hero section
-- Responsive layout
-- About, Skills, Certifications, Projects, and Contact sections
+## Local preview
 
-## Files
-- `index.html` → main website structure
-- `style.css` → full styling
-- `script.js` → typing animation logic
+```bash
+python -m http.server 8080
+```
 
-## How to run
-1. Download or clone the repository
-2. Open `index.html` in a browser
+Then open `http://localhost:8080`.
 
-## Customize
-- Update email link in the Contact section
-- Update GitHub profile link
-- Edit project cards with your real projects
-- Change typing roles in `script.js`
+## Before publishing
+
+1. Confirm the email, LinkedIn, GitHub, and résumé URLs.
+2. Keep the `CNAME` file for `subhnetarsingh.com`.
+
+## GitHub Pages
+
+Push the files to the repository's `main` branch. In GitHub, open **Settings → Pages**, choose **Deploy from a branch**, then select `main` and `/ (root)`.
